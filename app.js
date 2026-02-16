@@ -60,20 +60,28 @@ class FinanceApp {
 
     handleNumPadInput(value) {
         const amountInput = document.getElementById('amount');
-        let currentVal = amountInput.value || '';
+        let rawVal = this.stripThousandSeparators(amountInput.value) || '';
 
         if (value === 'C') {
-            currentVal = '';
+            rawVal = '';
         } else if (value === 'DEL') {
-            currentVal = currentVal.slice(0, -1);
+            rawVal = rawVal.slice(0, -1);
         } else {
-            // Prevent too many digits
-            if (currentVal.length < 10) {
-                currentVal += value;
+            if (rawVal.length < 12) {
+                rawVal += value;
             }
         }
 
-        amountInput.value = currentVal;
+        amountInput.value = this.formatInputNumber(rawVal);
+    }
+
+    formatInputNumber(val) {
+        if (!val) return '';
+        return val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    stripThousandSeparators(val) {
+        return val.replace(/\./g, '');
     }
 
     setupIOSFocusFix() {
@@ -118,10 +126,15 @@ class FinanceApp {
     // ========== Add Transaction ==========
     addTransaction() {
         const type = document.getElementById('transactionType').value;
-        const amount = parseFloat(document.getElementById('amount').value);
+        const amount = parseFloat(this.stripThousandSeparators(document.getElementById('amount').value));
         const category = document.getElementById('category').value;
         const description = document.getElementById('description').value;
         const date = document.getElementById('date').value;
+
+        if (isNaN(amount) || amount <= 0) {
+            alert("Please enter a valid amount!");
+            return;
+        }
 
         const transaction = {
             id: Date.now(),
