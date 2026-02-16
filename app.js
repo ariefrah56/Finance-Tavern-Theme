@@ -35,6 +35,44 @@ class FinanceApp {
         // Filter controls
         document.getElementById('filterType').addEventListener('change', () => this.renderTransactions());
         document.getElementById('filterCategory').addEventListener('change', () => this.renderTransactions());
+
+        // Number Pad
+        document.querySelectorAll('.numpad-btn').forEach(btn => {
+            btn.addEventListener('click', () => this.handleNumPadInput(btn.dataset.value));
+        });
+
+        // iOS PWA Focus Fix
+        this.setupIOSFocusFix();
+    }
+
+    handleNumPadInput(value) {
+        const amountInput = document.getElementById('amount');
+        let currentVal = amountInput.value || '';
+
+        if (value === 'C') {
+            currentVal = '';
+        } else if (value === 'DEL') {
+            currentVal = currentVal.slice(0, -1);
+        } else {
+            // Prevent too many digits
+            if (currentVal.length < 10) {
+                currentVal += value;
+            }
+        }
+
+        amountInput.value = currentVal;
+    }
+
+    setupIOSFocusFix() {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('touchstart', (e) => {
+                // Force focus on touch for standalone mode
+                if (window.navigator.standalone) {
+                    input.focus();
+                }
+            }, { passive: true });
+        });
     }
 
     // ========== Type Toggle ==========

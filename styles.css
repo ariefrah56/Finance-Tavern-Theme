@@ -307,7 +307,8 @@ textarea {
     border-radius: 8px;
     background: white;
     font-family: 'Cinzel', serif;
-    font-size: 14px;
+    font-size: 16px;
+    /* Optimized for iOS to prevent auto-zoom */
     color: var(--ink-black);
     transition: border-color 0.3s ease;
 }
@@ -318,6 +319,49 @@ textarea:focus {
     outline: none;
     border-color: var(--gold-dark);
     box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+}
+
+/* Number Pad Styling */
+.number-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    border: 1px solid var(--wood-light);
+}
+
+.numpad-btn {
+    padding: 15px 0;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--wood-dark);
+    background: linear-gradient(135deg, var(--parchment) 0%, var(--parchment-dark) 100%);
+    border: 2px solid var(--wood-medium);
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px var(--shadow);
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.numpad-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 3px var(--shadow);
+    background: var(--gold);
+}
+
+.numpad-btn.utility {
+    background: linear-gradient(135deg, #d2b48c 0%, #a0522d 100%);
+    color: white;
+}
+
+.numpad-btn.utility:active {
+    background: var(--red-wax);
 }
 
 textarea {

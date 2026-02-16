@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Tavern Ledger">
     <title>⚔️ The Tavern Ledger - Finance Manager</title>
     <link rel="manifest" href="manifest.json">
@@ -96,7 +96,23 @@
                 <!-- Amount -->
                 <div class="form-group">
                     <label for="amount">Amount (Gold Coins)</label>
-                    <input type="number" id="amount" placeholder="0" min="0" step="0.01" required>
+                    <input type="number" id="amount" placeholder="0" min="0" step="0.01" required readonly>
+
+                    <!-- Medieval Number Pad -->
+                    <div class="number-pad">
+                        <button type="button" class="numpad-btn" data-value="1">1</button>
+                        <button type="button" class="numpad-btn" data-value="2">2</button>
+                        <button type="button" class="numpad-btn" data-value="3">3</button>
+                        <button type="button" class="numpad-btn" data-value="4">4</button>
+                        <button type="button" class="numpad-btn" data-value="5">5</button>
+                        <button type="button" class="numpad-btn" data-value="6">6</button>
+                        <button type="button" class="numpad-btn" data-value="7">7</button>
+                        <button type="button" class="numpad-btn" data-value="8">8</button>
+                        <button type="button" class="numpad-btn" data-value="9">9</button>
+                        <button type="button" class="numpad-btn utility" data-value="C">C</button>
+                        <button type="button" class="numpad-btn" data-value="0">0</button>
+                        <button type="button" class="numpad-btn utility" data-value="DEL">⌫</button>
+                    </div>
                 </div>
 
                 <!-- Category -->
