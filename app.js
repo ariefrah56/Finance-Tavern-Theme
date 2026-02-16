@@ -41,6 +41,19 @@ class FinanceApp {
             btn.addEventListener('click', () => this.handleNumPadInput(btn.dataset.value));
         });
 
+        // Quick Notes
+        document.querySelectorAll('.note-btn').forEach(btn => {
+            if (btn.id === 'clearDescription') {
+                btn.addEventListener('click', () => {
+                    document.getElementById('description').value = '';
+                });
+            } else {
+                btn.addEventListener('click', () => {
+                    document.getElementById('description').value = btn.dataset.text;
+                });
+            }
+        });
+
         // iOS PWA Focus Fix
         this.setupIOSFocusFix();
     }

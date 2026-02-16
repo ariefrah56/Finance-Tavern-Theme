@@ -141,8 +141,19 @@
                 <!-- Description -->
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea id="description" placeholder="Write the details of this transaction..."
-                        rows="3"></textarea>
+                    <textarea id="description" placeholder="Write the details of this transaction..." rows="3"
+                        readonly></textarea>
+
+                    <!-- Quick Notes (Workaround for iOS keyboard) -->
+                    <div class="quick-notes">
+                        <button type="button" class="note-btn" data-text="Kamar & Makan">🛏️ Kamar & Makan</button>
+                        <button type="button" class="note-btn" data-text="Pajak Kerajaan">👑 Pajak Kerajaan</button>
+                        <button type="button" class="note-btn" data-text="Gaji Bulanan">💰 Gaji Bulanan</button>
+                        <button type="button" class="note-btn" data-text="Hadiah Guild">🏛️ Hadiah Guild</button>
+                        <button type="button" class="note-btn" data-text="Perbaikan Alat">🔨 Perbaikan Alat</button>
+                        <button type="button" class="note-btn" data-text="Bahan Makanan">🥖 Bahan Makanan</button>
+                        <button type="button" class="note-btn utility" id="clearDescription">Kosongkan ❌</button>
+                    </div>
                 </div>
 
                 <!-- Date -->

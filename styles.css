@@ -364,6 +364,42 @@ textarea:focus {
     background: var(--red-wax);
 }
 
+/* Quick Notes Styling */
+.quick-notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+}
+
+.note-btn {
+    padding: 8px 12px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--wood-dark);
+    background: var(--parchment-dark);
+    border: 1px solid var(--wood-medium);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.note-btn:active {
+    background: var(--gold);
+    transform: scale(0.95);
+}
+
+.note-btn.utility {
+    background: #d2b48c;
+    color: var(--wood-dark);
+}
+
 textarea {
     resize: vertical;
 }
