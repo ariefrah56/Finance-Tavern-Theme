@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Tavern Ledger">
+    <title>⚔️ The Tavern Ledger - Finance Manager</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;600;700&family=Uncial+Antiqua&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Main Container -->
+    <div class="tavern-container">
+
+        <!-- Header -->
+        <header class="tavern-header">
+            <p class="tavern-owner">Golek Tavern</p>
+            <div class="header-ornament left">⚔️</div>
+            <h1 class="tavern-title">The Tavern Ledger</h1>
+            <div class="header-ornament right">🍺</div>
+            <p class="tavern-subtitle">Keeper of Coins & Commerce</p>
+        </header>
+
+        <!-- Dashboard Stats -->
+        <section class="dashboard">
+            <div class="stat-card balance-card">
+                <div class="card-header">
+                    <span class="card-icon">👑</span>
+                    <h3>Treasury Balance</h3>
+                </div>
+                <div class="stat-value" id="totalBalance">0</div>
+                <div class="stat-label">Gold Coins</div>
+            </div>
+
+            <div class="stat-cards-row">
+                <div class="stat-card income-card">
+                    <div class="card-header">
+                        <span class="card-icon">💰</span>
+                        <h3>Gold Earned</h3>
+                    </div>
+                    <div class="stat-value" id="totalIncome">0</div>
+                    <div class="stat-label">This Moon</div>
+                </div>
+
+                <div class="stat-card expense-card">
+                    <div class="card-header">
+                        <span class="card-icon">🪙</span>
+                        <h3>Gold Spent</h3>
+                    </div>
+                    <div class="stat-value" id="totalExpense">0</div>
+                    <div class="stat-label">This Moon</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart Section -->
+        <section class="chart-section">
+            <div class="section-header">
+                <h2>📊 Cash Flow Chronicle</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="cashFlowChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Add Transaction Form -->
+        <section class="add-transaction-section">
+            <div class="section-header">
+                <h2>📝 Record New Transaction</h2>
+            </div>
+
+            <form id="transactionForm" class="transaction-form">
+                <!-- Type Toggle -->
+                <div class="form-group">
+                    <label>Transaction Type</label>
+                    <div class="type-toggle">
+                        <button type="button" class="type-btn active" data-type="income">
+                            💰 Gold Earned
+                        </button>
+                        <button type="button" class="type-btn" data-type="expense">
+                            🪙 Gold Spent
+                        </button>
+                    </div>
+                    <input type="hidden" id="transactionType" value="income">
+                </div>
+
+                <!-- Amount -->
+                <div class="form-group">
+                    <label for="amount">Amount (Gold Coins)</label>
+                    <input type="number" id="amount" placeholder="0" min="0" step="0.01" required>
+                </div>
+
+                <!-- Category -->
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" required>
+                        <optgroup label="💰 Gold Earned" id="incomeCategories">
+                            <option value="Ale Sales">🍺 Ale Sales</option>
+                            <option value="Room Rentals">🛏️ Room Rentals</option>
+                            <option value="Food Service">🍖 Food Service</option>
+                            <option value="Entertainment">🎵 Entertainment</option>
+                            <option value="Guild Administrator">🏛️ Guild Administrator</option>
+                            <option value="Other Income">💎 Other Income</option>
+                        </optgroup>
+                        <optgroup label="🪙 Gold Spent" id="expenseCategories" style="display:none;">
+                            <option value="Supplies">📦 Supplies</option>
+                            <option value="Ingredients">🥖 Ingredients</option>
+                            <option value="Wages">👨‍🍳 Wages</option>
+                            <option value="Repairs">🔨 Repairs</option>
+                            <option value="Taxes">👑 Taxes & Fees</option>
+                            <option value="Other Expense">💸 Other Expense</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Write the details of this transaction..."
+                        rows="3"></textarea>
+                </div>
+
+                <!-- Date -->
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">
+                    <span class="btn-icon">📜</span>
+                    Record in Ledger
+                </button>
+            </form>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="section-header">
+                <h2>🔍 Filter Transactions</h2>
+            </div>
+            <div class="filter-controls">
+                <select id="filterType" class="filter-select">
+                    <option value="all">All Transactions</option>
+                    <option value="income">💰 Gold Earned Only</option>
+                    <option value="expense">🪙 Gold Spent Only</option>
+                </select>
+
+                <select id="filterCategory" class="filter-select">
+                    <option value="all">All Categories</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Transaction List -->
+        <section class="transactions-section">
+            <div class="section-header">
+                <h2>📖 Transaction History</h2>
+                <div class="transaction-count" id="transactionCount">0 entries</div>
+            </div>
+            <div id="transactionList" class="transaction-list">
+                <div class="empty-state">
+                    <span class="empty-icon">📜</span>
+                    <p>No transactions recorded yet</p>
+                    <small>Start by adding your first transaction above</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="tavern-footer">
+            <p>⚔️ Crafted in the Medieval Era ⚔️</p>
+            <small>May your coffers overflow with gold</small>
+        </footer>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <!-- Main App Script -->
+    <script src="app.js"></script>
+</body>
+
+</html>
