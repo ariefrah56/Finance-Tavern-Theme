@@ -36,6 +36,9 @@ class FinanceApp {
         document.getElementById('filterType').addEventListener('change', () => this.renderTransactions());
         document.getElementById('filterCategory').addEventListener('change', () => this.renderTransactions());
 
+        // Category Auto-Switch Type (Smart Category)
+        document.getElementById('category').addEventListener('change', (e) => this.handleCategoryChange(e));
+
         // Number Pad
         document.querySelectorAll('.numpad-btn').forEach(btn => {
             btn.addEventListener('click', () => this.handleNumPadInput(btn.dataset.value));
@@ -96,30 +99,34 @@ class FinanceApp {
         });
     }
 
-    // ========== Type Toggle ==========
-    toggleType(e) {
-        const btn = e.target;
-        const type = btn.dataset.type;
+    handleCategoryChange(e) {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const group = selectedOption.parentNode.id; // incomeCategories or expenseCategories
+        const type = group === 'incomeCategories' ? 'income' : 'expense';
 
+        this.updateTypeUI(type);
+    }
+
+    updateTypeUI(type) {
         // Update button states
-        document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        document.querySelectorAll('.type-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.type === type);
+        });
 
         // Update hidden input
         document.getElementById('transactionType').value = type;
+    }
 
-        // Show/hide category optgroups
-        const incomeGroup = document.getElementById('incomeCategories');
-        const expenseGroup = document.getElementById('expenseCategories');
+    // ========== Type Toggle ==========
+    toggleType(e) {
+        const type = e.target.dataset.type;
+        this.updateTypeUI(type);
 
-        if (type === 'income') {
-            incomeGroup.style.display = '';
-            expenseGroup.style.display = 'none';
-            incomeGroup.querySelector('option').selected = true;
-        } else {
-            incomeGroup.style.display = 'none';
-            expenseGroup.style.display = '';
-            expenseGroup.querySelector('option').selected = true;
+        // Optional: Sync category to first in group when manually toggling type
+        const group = type === 'income' ? 'incomeCategories' : 'expenseCategories';
+        const firstOption = document.getElementById(group).querySelector('option');
+        if (firstOption) {
+            document.getElementById('category').value = firstOption.value;
         }
     }
 
@@ -157,11 +164,7 @@ class FinanceApp {
         this.setDefaultDate();
 
         // Reset to income type
-        document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('.type-btn[data-type="income"]').classList.add('active');
-        document.getElementById('transactionType').value = 'income';
-        document.getElementById('incomeCategories').style.display = '';
-        document.getElementById('expenseCategories').style.display = 'none';
+        this.updateTypeUI('income');
 
         // Show success feedback
         this.showNotification('Transaction recorded in the ledger! 📜');
